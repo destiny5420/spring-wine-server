@@ -1,5 +1,6 @@
 require("dotenv").config();
 const MongoRouter = require("./router/mongo.js");
+const { socketFlow } = require("./assets/js/socketio_flow");
 const express = require('express');
 const app = express();
 const http = require('http');
@@ -11,6 +12,8 @@ const io = new Server(server, {
     methods: ["GET", "POST"]
   }
 });
+
+new socketFlow(io)
 
 const cors = require("cors");
 const corsOptions = {
@@ -30,17 +33,7 @@ app.get('/', (req, res) => {
   res.sendFile(__dirname + '/index.html');
 });
 
-io.on('connection', (socket) => {
-  console.log('a user connected');
-  socket.on('disconnect', () => {
-    console.log('user disconnected');
-  });
 
-  socket.on('chat message', (msg) => {
-    console.log(`chat message: `, msg);
-    io.emit('chat message', msg);
-  })
-});
 
 var port = process.env.PORT || 9000;
 server.listen(port);
