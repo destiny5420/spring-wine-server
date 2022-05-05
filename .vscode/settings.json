@@ -1,0 +1,6 @@
+{
+  "editor.defaultFormatter": "esbenp.prettier-vscode", // 如果使用 prettier 來排版時，須加上這段
+  "editor.codeActionsOnSave": {
+    "source.fixAll.stylelint": true // 如果使用 stylelint 來做 css 排版時，須加上這段
+  }
+}

@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose')
 
 let LeaderBoardSchema = new mongoose.Schema({
   name: {
@@ -18,6 +18,6 @@ let LeaderBoardSchema = new mongoose.Schema({
     type: Date,
     default: Date.now,
   },
-});
+})
 
-module.exports = mongoose.model("LeaderBoard", LeaderBoardSchema);
+module.exports = mongoose.model('LeaderBoard', LeaderBoardSchema)

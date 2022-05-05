@@ -14,8 +14,12 @@
       #messages > li { padding: 0.5rem 1rem; }
       #messages > li:nth-child(odd) { background: #efefef; }
     </style>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
   </head>
   <body>
+    <button class="js-topic-a"> 題目 A </button>
+    <button class="js-topic-b"> 題目 B </button>
+    <button class="js-topic-c"> 題目 C </button>
     <ul id="messages"></ul>
     <form id="form" action="">
       <input id="input" autocomplete="off" /><button>Send</button>
@@ -23,19 +27,37 @@
   </body>
   <script src="/socket.io/socket.io.js"></script>
 <script>
-  var socket = io();
+  const socket = io();
 
-  var form = document.getElementById('form');
-  var input = document.getElementById('input');
+  const btnA = $('.js-topic-a').click(function() {
+    socket.emit('CS_MESSAGE', {
+      type: 'CS_DashboardNewTopic',
+      data: {
+        index: 0,
+      }
+    })
+  })
 
-  console.log(`socket: `, socket);
+  const btnB = $('.js-topic-b').click(function() {
+    socket.emit('CS_MESSAGE', {
+      type: 'CS_DashboardNewTopic',
+      data: {
+        index: 1,
+      }
+    })
+  })
 
-  form.addEventListener('submit', function(e) {
-    e.preventDefault();
-    if (input.value) {
-      socket.emit('chat message', input.value);
-      input.value = '';
-    }
-  });
+  const btnC = $('.js-topic-c').click(function() {
+    socket.emit('CS_MESSAGE', {
+      type: 'CS_DashboardNewTopic',
+      data: {
+        index: 2,
+      }
+    })
+  })
+
+  socket.on('SC_MESSAGE', (data) => {
+    console.log(`SC_MESSAGE / data: `, data);
+  })
 </script>
 </html>
