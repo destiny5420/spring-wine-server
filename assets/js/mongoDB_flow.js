@@ -83,6 +83,34 @@ async function update(data) {
   }
 }
 
+async function addScore(data) {
+  console.log(`[addScore] / data: `, data)
+  try {
+    const filter = {
+      email: data.email,
+    }
+
+    const findObj = await LeaderBoard.find(filter)
+    const resultScore = findObj[0].score + data.score
+
+    const update = {
+      score: resultScore,
+    }
+
+    await LeaderBoard.findOneAndUpdate(filter, update)
+
+    return {
+      email: data.email,
+      score: resultScore,
+    }
+  } catch (err) {
+    return {
+      result: err.stack,
+      success: false,
+    }
+  }
+}
+
 async function find() {
   try {
     const sortQuery = {
@@ -119,6 +147,9 @@ module.exports = {
   },
   update: async (data) => {
     return await update(data)
+  },
+  addScore: async (data) => {
+    return await addScore(data)
   },
   find: async () => {
     return await find()

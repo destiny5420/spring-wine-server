@@ -4,7 +4,7 @@ let curIO = null
 
 function SetNewTopic(data) {
   topic.setCurTopic(data.data.index)
-  console.log(`cur topic: `, topic.getCurTopic())
+  gameStatus.init()
 }
 
 function SC_MESSAGE(data) {
@@ -25,8 +25,7 @@ function SocketFlow(io) {
       switch (data.type) {
         case 'CS_DashboardNewTopic':
           SetNewTopic(data)
-          const PlayingStatus = gameStatus.getStatusList.PLAYING
-          gameStatus.setStatus(PlayingStatus)
+
           SC_MESSAGE({
             type: 'SC_DashboardNewTopic',
             data: {

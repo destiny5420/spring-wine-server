@@ -15,20 +15,32 @@ router.post('/click', function (request, response) {
   const email = request.body.email
   const color = request.body.color
 
-  console.log(`name: ${name} / email: ${email} / color: ${color}`)
-  console.log(`getCurTopic: ${topic.getCurTopic()}`)
+  console.log(
+    `[Click] / name: ${name} / email: ${email} / correctColor: ${topic.getCurTopic()} / color: ${color}`
+  )
 
   if (color === topic.getCurTopic()) {
-    console.log('你找到了')
+    const score = gameStatus.getScore()
+    gameStatus.reduceVictoryCount()
+
+    const isGameOver = gameStatus.isGameOver()
+
+    if (isGameOver) {
+      gameStatus.setStatusToIdle()
+      SC_MESSAGE({
+        type: 'SC_GAME_OVER',
+      })
+    }
 
     mongoDBFlow
-      .update({ email, score: 500 })
+      .addScore({ email, score })
       .then((result) => {
         SC_MESSAGE({
           type: 'SC_GAME_VICTORY',
           data: {
             name: name,
             mail: email,
+            gameStatus: gameStatus.getStatus(),
           },
         })
         response.status(200).send({
@@ -40,7 +52,6 @@ router.post('/click', function (request, response) {
         response.status(200).send(err)
       })
   } else {
-    console.log('找錯了')
     response.status(200).send({
       result: `不是這個東西喔！`,
       answerCorrect: false,
