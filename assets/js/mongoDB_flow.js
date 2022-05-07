@@ -35,6 +35,8 @@ async function register(data) {
     return {
       success: true,
       result: 'The user already exits',
+      name: data.name,
+      email: data.email,
     }
   }
 
@@ -47,6 +49,8 @@ async function register(data) {
   return {
     success: true,
     result: 'register successfully!',
+    name: data.name,
+    email: data.email,
   }
 }
 
