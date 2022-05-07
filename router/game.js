@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const topic = require('../store/topic')
 const mongoDBFlow = require('../assets/js/mongoDB_flow')
+const gameStatus = require('../store/gameStatus')
 
 let curIO = null
 
@@ -26,8 +27,8 @@ router.post('/click', function (request, response) {
         SC_MESSAGE({
           type: 'SC_GAME_VICTORY',
           data: {
-            name: 'paper',
-            mail: 'paper.hsiao@gmail.com',
+            name: name,
+            mail: email,
           },
         })
         response.status(200).send({
@@ -45,6 +46,12 @@ router.post('/click', function (request, response) {
       answerCorrect: false,
     })
   }
+})
+
+router.get('/get-game-status', function (req, res) {
+  res.status(200).send({
+    gameStatus: gameStatus.getStatus(),
+  })
 })
 
 module.exports = {

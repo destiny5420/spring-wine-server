@@ -1,7 +1,8 @@
 const topic = require('../../store/topic')
+const gameStatus = require('../../store/gameStatus')
 let curIO = null
 
-function CS_Dashboard_New_Topic(data) {
+function SetNewTopic(data) {
   topic.setCurTopic(data.data.index)
   console.log(`cur topic: `, topic.getCurTopic())
 }
@@ -23,7 +24,9 @@ function SocketFlow(io) {
 
       switch (data.type) {
         case 'CS_DashboardNewTopic':
-          CS_Dashboard_New_Topic(data)
+          SetNewTopic(data)
+          const PlayingStatus = gameStatus.getStatusList.PLAYING
+          gameStatus.setStatus(PlayingStatus)
           SC_MESSAGE({
             type: 'SC_DashboardNewTopic',
             data: {
@@ -39,7 +42,7 @@ function SocketFlow(io) {
       }
     })
 
-    // socket.broadcast.emit('hi', { some: "data" });
+    socket.emit('connected', { gameStatus: gameStatus.getStatus() })
   })
 }
 

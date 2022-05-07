@@ -13,7 +13,5 @@ module.exports = {
   getStatus: () => {
     return curGameStatus
   },
-  getStatusList: () => {
-    return STATUS
-  },
+  getStatusList: STATUS,
 }
