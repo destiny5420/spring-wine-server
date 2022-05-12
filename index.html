@@ -64,6 +64,7 @@
     <button class="js-topic-a">題目 A</button>
     <button class="js-topic-b">題目 B</button>
     <button class="js-topic-c">題目 C</button>
+    <button class="js-topic-get-leaderboard">顯示排行榜</button>
     <ul id="messages"></ul>
     <form id="form" action="">
       <input id="input" autocomplete="off" /><button>Send</button>
@@ -97,6 +98,12 @@
         data: {
           index: 2,
         },
+      })
+    })
+
+    const btnGetLeaderBoard = $('.js-topic-get-leaderboard').click(function () {
+      socket.emit('CS_MESSAGE', {
+        type: 'CS_GetLeaderBoard',
       })
     })
 

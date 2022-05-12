@@ -1,5 +1,6 @@
 const topic = require('../../store/topic')
 const gameStatus = require('../../store/gameStatus')
+const mongoDBFlow = require('../../assets/js/mongoDB_flow')
 let curIO = null
 
 function SetNewTopic(data) {
@@ -33,8 +34,20 @@ function SocketFlow(io) {
             },
           })
           break
-        case 'CS_GAME_CLICK':
-          console.log(`CS_GAME_CLICK / data: `, data)
+        case 'CS_GetLeaderBoard':
+          mongoDBFlow
+            .find()
+            .then((result) => {
+              SC_MESSAGE({
+                type: 'SC_ShowLeaderBoard',
+                data: {
+                  leaderBoard: result,
+                },
+              })
+            })
+            .catch((err) => {
+              response.status(200).send(err)
+            })
           break
         default:
           break
