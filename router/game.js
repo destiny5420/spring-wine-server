@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const topic = require('../store/topic')
 const mongoDBFlow = require('../assets/js/mongoDB_flow')
+const loggerFlow = require('../assets/js/logger_flow')
 const gameStatus = require('../store/gameStatus')
 
 let curIO = null
@@ -79,6 +80,8 @@ router.post('/click', function (request, response) {
   mongoDBFlow
     .addScore({ email, score })
     .then((result) => {
+      loggerFlow.write(`[API-Click] / email: ${email} / add-score: ${score}`)
+
       SC_MESSAGE({
         type: 'SC_GAME_VICTORY',
         data: {

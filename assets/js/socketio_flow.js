@@ -1,6 +1,7 @@
 const topic = require('../../store/topic')
 const gameStatus = require('../../store/gameStatus')
 const mongoDBFlow = require('../../assets/js/mongoDB_flow')
+const loggerFlow = require('../../assets/js/logger_flow')
 let curIO = null
 
 function SetNewTopic(data) {
@@ -26,6 +27,12 @@ function SocketFlow(io) {
       switch (data.type) {
         case 'CS_DashboardNewTopic':
           SetNewTopic(data)
+
+          loggerFlow.write(
+            `[CS_DashboardNewTopic] / index: ${
+              data.data.index
+            } / color: ${topic.getCurTopic()}`
+          )
 
           SC_MESSAGE({
             type: 'SC_DashboardNewTopic',
