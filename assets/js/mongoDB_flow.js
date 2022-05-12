@@ -84,7 +84,6 @@ async function update(data) {
 }
 
 async function addScore(data) {
-  console.log(`[addScore] / data: `, data)
   try {
     const filter = {
       email: data.email,
@@ -92,6 +91,12 @@ async function addScore(data) {
 
     const findObj = await LeaderBoard.find(filter)
     const resultScore = findObj[0].score + data.score
+
+    console.log(
+      `[addScore] / email: `,
+      data.email,
+      ` / originScore: ${findObj[0].score} / addScore: ${data.score} / resultScore: ${resultScore}`
+    )
 
     const update = {
       score: resultScore,
