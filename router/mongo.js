@@ -1,6 +1,7 @@
 const express = require('express')
 const router = express.Router()
 const mongoDBFlow = require('../assets/js/mongoDB_flow')
+const loggerFlow = require('../assets/js/logger_flow')
 
 router.get('/find', function (request, response) {
   mongoDBFlow
@@ -20,9 +21,11 @@ router.post('/register', function (request, response) {
   mongoDBFlow
     .register({ name, email })
     .then((result) => {
+      loggerFlow.write(`[API-Register] / email: ${email} / name: ${name}`)
       response.status(200).send(result)
     })
     .catch((err) => {
+      loggerFlow.write(`[API-Register-err] / error: `, err)
       response.status(200).send(err)
     })
 })

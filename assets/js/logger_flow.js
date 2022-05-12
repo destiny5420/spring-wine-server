@@ -25,18 +25,21 @@ var logger = winston.createLogger({
   transports: [transport],
 })
 
+function getDateMsg() {
+  const dt = Date.now()
+  const msgDate = `${new Date(dt).getFullYear()}-${new Date(
+    dt
+  ).getMonth()}-${new Date(dt).getDate()}-${new Date(dt).getHours()}-${new Date(
+    dt
+  ).getMinutes()}-${new Date(dt).getMilliseconds()}`
+
+  return msgDate
+}
+
 module.exports = {
   write: (text) => {
-    const dt = Date.now()
-    const msgDate = `${new Date(dt).getFullYear()}-${new Date(
-      dt
-    ).getMonth()}-${new Date(dt).getDate()}-${new Date(
-      dt
-    ).getHours()}-${new Date(dt).getMinutes()}-${new Date(
-      dt
-    ).getMilliseconds()}`
+    const message = `${getDateMsg()} / ${text}`
 
-    const message = `${msgDate} / ${text}`
     logger.info(message)
   },
 }
