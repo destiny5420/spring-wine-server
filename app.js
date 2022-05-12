@@ -20,7 +20,7 @@ GameRouter.setIO(io)
 
 const cors = require('cors')
 const corsOptions = {
-  origin: '*',
+  origin: [process.env.CLIENT] || '*',
   methods: 'GET,POST,DELETE,PUT,PATCH,OPTIONS,HEAD,FETCH',
   allowedHeaders: ['Content-Type', 'Authorization'],
 }
