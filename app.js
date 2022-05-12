@@ -33,10 +33,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use('/game', GameRouter.router)
 app.use('/mongo', MongoRouter)
 
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/index.html')
-})
-
 app.get('/dashboard-root', (req, res) => {
   res.sendFile(__dirname + '/index.html')
 })
