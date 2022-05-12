@@ -5,7 +5,7 @@ const STATUS = {
 }
 
 const UNIT_SCORE = 500
-const VICTORY_MAX_COUNT = 3
+const VICTORY_MAX_COUNT = 2
 let curGameStatus = STATUS.IDLE
 let curVictoryCount = VICTORY_MAX_COUNT
 
@@ -19,6 +19,9 @@ module.exports = {
   },
   isGameOver: () => {
     return curVictoryCount <= 0
+  },
+  isPlaying: () => {
+    return curGameStatus === STATUS.PLAYING
   },
   setStatusToIdle: () => {
     curGameStatus = STATUS.IDLE
