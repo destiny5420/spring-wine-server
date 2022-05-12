@@ -19,6 +19,13 @@ router.post('/click', function (request, response) {
     `[Click] / name: ${name} / email: ${email} / correctColor: ${topic.getCurTopic()} / color: ${color}`
   )
 
+  if (!gameStatus.isPlaying()) {
+    response.status(200).send({
+      valid: false,
+    })
+    return
+  }
+
   if (color === topic.getCurTopic()) {
     const score = gameStatus.getScore()
     gameStatus.reduceVictoryCount()
@@ -45,6 +52,7 @@ router.post('/click', function (request, response) {
         })
         response.status(200).send({
           ...result,
+          valid: true,
           answerCorrect: true,
         })
       })
@@ -54,6 +62,7 @@ router.post('/click', function (request, response) {
   } else {
     response.status(200).send({
       result: `不是這個東西喔！`,
+      valid: true,
       answerCorrect: false,
     })
   }
