@@ -36,7 +36,7 @@ router.post('/click', function (request, response) {
    * @description - 當送來的顏色編碼不對的時候
    * 1. 回送訊息
    */
-  if (!color === topic.getCurTopic()) {
+  if (color !== topic.getCurTopic()) {
     response.status(200).send({
       result: `不是這個東西喔！`,
       valid: true,
