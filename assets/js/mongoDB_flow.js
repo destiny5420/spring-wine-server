@@ -13,6 +13,55 @@ db.on('error', (err) => {
 })
 db.once('open', (db) => console.log(`Connected to MonoDB`))
 
+async function adminLogin(data) {
+  const findObj = await LeaderBoard.find({
+    email: data.email,
+  })
+
+  if (findObj.length <= 0) {
+    return {
+      success: false,
+      message: `User does't exist.`,
+    }
+  }
+
+  if (!findObj[0].admin) {
+    return {
+      success: false,
+      message: `Authenticate failed.`,
+    }
+  }
+
+  if (findObj[0].password !== data.password) {
+    return {
+      success: false,
+      message: `Incorrect password.`,
+    }
+  }
+
+  return {
+    email: findObj[0].email,
+    success: true,
+    message: `Sign in suceesfully.`,
+  }
+}
+
+async function findOne(data) {
+  const user = await LeaderBoard.findOne({
+    email: data.email,
+  })
+
+  if (!user) {
+    throw new Error()
+  }
+
+  return {
+    success: true,
+    result: 'User found successfully.',
+    data: user,
+  }
+}
+
 async function register(data) {
   const findObj = await LeaderBoard.find({
     email: data.email,
@@ -116,7 +165,7 @@ async function addScore(data) {
   }
 }
 
-async function find() {
+async function leaderBoard() {
   try {
     const sortQuery = {
       score: -1,
@@ -150,14 +199,20 @@ module.exports = {
   register: async (data) => {
     return await register(data)
   },
+  adminLogin: async (data) => {
+    return await adminLogin(data)
+  },
+  findOne: async (data) => {
+    return await findOne(data)
+  },
   update: async (data) => {
     return await update(data)
   },
   addScore: async (data) => {
     return await addScore(data)
   },
-  find: async () => {
-    return await find()
+  leaderBoard: async () => {
+    return await leaderBoard()
   },
   gameOver: async (data) => {
     const playerData = await update(data)

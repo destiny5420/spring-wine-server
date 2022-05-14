@@ -2,8 +2,19 @@ require('dotenv').config()
 const MongoRouter = require('./router/mongo.js')
 const GameRouter = require('./router/game')
 const SocketFlow = require('./assets/js/socketio_flow')
-const express = require('express')
-const app = express()
+const Global = require('./store/global')
+const auth = require('./middleware/auth')
+const login = require('./middleware/login')
+const cookieParser = require('cookie-parser')
+const morgan = require('morgan')
+const cors = require('cors')
+const corsOptions = {
+  origin: process.env.CLIENT ? [process.env.CLIENT] : '*',
+  methods: 'GET,POST,DELETE,PUT,PATCH,OPTIONS,HEAD,FETCH',
+  allowedHeaders: ['Content-Type', 'Authorization'],
+}
+const bodyParser = require('body-parser')
+const app = Global.getApp()
 const http = require('http')
 const server = http.createServer(app)
 const { Server } = require('socket.io')
@@ -14,26 +25,24 @@ const io = new Server(server, {
   },
 })
 
+app.set('secret', process.env.SECRET_JWT)
 SocketFlow.setIO(io)
 new SocketFlow.socketFlow(io)
 GameRouter.setIO(io)
 
-const cors = require('cors')
-const corsOptions = {
-  origin: process.env.CLIENT ? [process.env.CLIENT] : '*',
-  methods: 'GET,POST,DELETE,PUT,PATCH,OPTIONS,HEAD,FETCH',
-  allowedHeaders: ['Content-Type', 'Authorization'],
-}
-
 app.use(cors(corsOptions))
-var bodyParser = require('body-parser')
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
+app.use(morgan('dev'))
+app.use(cookieParser(process.env.SECRET_COOKIE))
 
 app.use('/game', GameRouter.router)
 app.use('/mongo', MongoRouter)
 
-app.get('/dashboard-root', (req, res) => {
+app.get('/dashboard-login', login, async (req, res) => {
+  res.sendFile(__dirname + '/login.html')
+})
+app.get('/dashboard-root', auth, async (req, res) => {
   res.sendFile(__dirname + '/index.html')
 })
 

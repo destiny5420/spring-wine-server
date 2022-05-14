@@ -14,6 +14,15 @@ let LeaderBoardSchema = new mongoose.Schema({
     required: false,
     default: 0,
   },
+  admin: {
+    type: Boolean,
+    required: false,
+    default: false,
+  },
+  password: {
+    type: String,
+    required: false,
+  },
   createAt: {
     type: Date,
     default: Date.now,

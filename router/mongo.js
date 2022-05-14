@@ -1,16 +1,44 @@
 const express = require('express')
+const Global = require('../store/global')
 const router = express.Router()
 const mongoDBFlow = require('../assets/js/mongoDB_flow')
 const loggerFlow = require('../assets/js/logger_flow')
+const jwt = require('jsonwebtoken')
 
 router.get('/find', function (request, response) {
   mongoDBFlow
-    .find()
+    .leaderBoard()
     .then((result) => {
       response.status(200).send(result)
     })
     .catch((err) => {
       response.status(200).send(err)
+    })
+})
+
+router.post('/admin-login', function (request, response) {
+  const email = request.body.email
+  const password = request.body.password
+
+  mongoDBFlow
+    .adminLogin({
+      email,
+      password,
+    })
+    .then((result) => {
+      const { success, message } = result
+
+      if (!success) {
+        response.json({ success, message })
+      } else {
+        const { email } = result
+        const token = jwt.sign(email, Global.getApp().get('secret'), {
+          // expiresIn: 60 * 60 * 24,
+        })
+
+        response.cookie('_bkswToken', token, { httpOnly: true })
+        response.status(200).redirect('../dashboard-root')
+      }
     })
 })
 

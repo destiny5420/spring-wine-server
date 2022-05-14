@@ -43,7 +43,7 @@ function SocketFlow(io) {
           break
         case 'CS_GetLeaderBoard':
           mongoDBFlow
-            .find()
+            .leaderBoard()
             .then((result) => {
               SC_MESSAGE({
                 type: 'SC_ShowLeaderBoard',
