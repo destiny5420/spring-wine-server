@@ -41,6 +41,21 @@ function SocketFlow(io) {
             },
           })
           break
+        case 'CS_Animate':
+          const animateIndex = data.data.index
+
+          SC_MESSAGE({
+            type: 'SC_Animate',
+            data: {
+              index: animateIndex,
+            },
+          })
+          break
+        case 'CS_AnimateClose':
+          SC_MESSAGE({
+            type: 'SC_AnimateClose',
+          })
+          break
         case 'CS_GetLeaderBoard':
           mongoDBFlow
             .leaderBoard()

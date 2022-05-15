@@ -4,54 +4,10 @@
     <title>春酒 Dashboard</title>
     <style>
       body {
-        margin: 0;
+        margin: 20px;
         padding-bottom: 3rem;
         font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
           Helvetica, Arial, sans-serif;
-      }
-
-      #form {
-        background: rgba(0, 0, 0, 0.15);
-        padding: 0.25rem;
-        position: fixed;
-        bottom: 0;
-        left: 0;
-        right: 0;
-        display: flex;
-        height: 3rem;
-        box-sizing: border-box;
-        backdrop-filter: blur(10px);
-      }
-      #input {
-        border: none;
-        padding: 0 1rem;
-        flex-grow: 1;
-        border-radius: 2rem;
-        margin: 0.25rem;
-      }
-      #input:focus {
-        outline: none;
-      }
-      #form > button {
-        background: #333;
-        border: none;
-        padding: 0 1rem;
-        margin: 0.25rem;
-        border-radius: 3px;
-        outline: none;
-        color: #fff;
-      }
-
-      #messages {
-        list-style-type: none;
-        margin: 0;
-        padding: 0;
-      }
-      #messages > li {
-        padding: 0.5rem 1rem;
-      }
-      #messages > li:nth-child(odd) {
-        background: #efefef;
       }
     </style>
     <script
@@ -61,14 +17,86 @@
     ></script>
   </head>
   <body>
-    <button class="js-topic-a">題目 A</button>
-    <button class="js-topic-b">題目 B</button>
-    <button class="js-topic-c">題目 C</button>
-    <button class="js-topic-get-leaderboard">顯示排行榜</button>
+    <div>
+      <h3>分鏡</h3>
+      <div>
+        <button class="js-anime-01">分鏡 01</button>
+        <button class="js-anime-02">分鏡 02</button>
+        <button class="js-anime-03">分鏡 03</button>
+        <button class="js-anime-04">分鏡 04</button>
+        <button class="js-anime-05">分鏡 05</button>
+        <button class="js-anime-close">關閉分鏡</button>
+      </div>
+    </div>
+    <div>
+      <h3>題目</h3>
+      <div>
+        <button class="js-topic-a">題目 A</button>
+        <button class="js-topic-b">題目 B</button>
+        <button class="js-topic-c">題目 C</button>
+      </div>
+    </div>
+    <div>
+      <h3>結果</h3>
+      <div>
+        <button class="js-topic-get-leaderboard">顯示排行榜</button>
+      </div>
+    </div>
   </body>
   <script src="/socket.io/socket.io.js"></script>
   <script>
     const socket = io()
+
+    const anime01 = $('.js-anime-01').click(function () {
+      socket.emit('CS_MESSAGE', {
+        type: 'CS_Animate',
+        data: {
+          index: 0,
+        },
+      })
+    })
+
+    const anime02 = $('.js-anime-02').click(function () {
+      socket.emit('CS_MESSAGE', {
+        type: 'CS_Animate',
+        data: {
+          index: 1,
+        },
+      })
+    })
+
+    const anime03 = $('.js-anime-03').click(function () {
+      socket.emit('CS_MESSAGE', {
+        type: 'CS_Animate',
+        data: {
+          index: 2,
+        },
+      })
+    })
+
+    const anime04 = $('.js-anime-04').click(function () {
+      socket.emit('CS_MESSAGE', {
+        type: 'CS_Animate',
+        data: {
+          index: 3,
+        },
+      })
+    })
+
+    const anime05 = $('.js-anime-05').click(function () {
+      socket.emit('CS_MESSAGE', {
+        type: 'CS_Animate',
+        data: {
+          index: 4,
+        },
+      })
+    })
+
+    const animeClose = $('.js-anime-close').click(function () {
+      socket.emit('CS_MESSAGE', {
+        type: 'CS_AnimateClose',
+      })
+    })
 
     const btnA = $('.js-topic-a').click(function () {
       socket.emit('CS_MESSAGE', {
