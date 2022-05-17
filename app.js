@@ -40,7 +40,42 @@ app.use('/game', GameRouter.router)
 app.use('/mongo', MongoRouter)
 
 app.get('/dashboard-login', login, async (req, res) => {
-  res.sendFile(__dirname + '/login.html')
+  res.setHeader('Content-Type', 'text/html')
+  res.send(`<!DOCTYPE html>
+  <html>
+    <head>
+      <title>登入畫面</title>
+      <style>
+        body {
+          margin: 0;
+          padding-bottom: 3rem;
+          font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto,
+            Helvetica, Arial, sans-serif;
+        }
+      </style>
+      <script
+        src="https://code.jquery.com/jquery-3.6.0.min.js"
+        integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4="
+        crossorigin="anonymous"
+      ></script>
+    </head>
+    <body>
+      <form action="${
+        process.env.SERVER_URL || 'http://localhost:9000'
+      }/mongo/admin-login" method="post">
+        <input type="email" name="email" id="email" placeholder="email" />
+        <input
+          type="password"
+          name="password"
+          id="password"
+          placeholder="password"
+        />
+        <button type="submit">送出</button>
+      </form>
+    </body>
+    <script></script>
+  </html>
+  `)
 })
 app.get('/dashboard-root', auth, async (req, res) => {
   res.sendFile(__dirname + '/index.html')
