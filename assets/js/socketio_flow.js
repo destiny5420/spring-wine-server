@@ -58,6 +58,9 @@ function SocketFlow(io) {
             type: 'SC_AnimateClose',
           })
           break
+        case 'CS_AnimateReset':
+          gameStatus.resetAnimateEnd()
+          break
         case 'CS_GetLeaderBoard':
           mongoDBFlow
             .leaderBoard()

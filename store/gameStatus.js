@@ -41,6 +41,9 @@ module.exports = {
   getStatus: () => {
     return curGameStatus
   },
+  resetAnimateEnd: () => {
+    curAnimateEnd = false
+  },
   setAnimateEnd: (key) => {
     curAnimateEnd = key
   },

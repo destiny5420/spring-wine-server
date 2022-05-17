@@ -26,6 +26,7 @@
         <button class="js-anime-04">分鏡 04</button>
         <button class="js-anime-05">分鏡 05</button>
         <button class="js-anime-close">關閉分鏡</button>
+        <button class="js-anime-reset">Reset 分鏡</button>
       </div>
     </div>
     <div>
@@ -95,6 +96,12 @@
     const animeClose = $('.js-anime-close').click(function () {
       socket.emit('CS_MESSAGE', {
         type: 'CS_AnimateClose',
+      })
+    })
+
+    const animeReset = $('.js-anime-reset').click(function () {
+      socket.emit('CS_MESSAGE', {
+        type: 'CS_AnimateReset',
       })
     })
 
