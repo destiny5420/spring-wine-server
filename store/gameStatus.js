@@ -5,7 +5,7 @@ const STATUS = {
 }
 
 const UNIT_SCORE = 500
-const VICTORY_MAX_COUNT = 2
+const VICTORY_MAX_COUNT = 3
 let curAnimateEnd = false
 let curGameStatus = STATUS.IDLE
 let curVictoryCount = VICTORY_MAX_COUNT
@@ -13,8 +13,14 @@ let winnerList = []
 
 module.exports = {
   init: () => {
-    curVictoryCount = VICTORY_MAX_COUNT
     curGameStatus = STATUS.PLAYING
+    curVictoryCount = VICTORY_MAX_COUNT
+    winnerList = []
+  },
+  statusReset: () => {
+    curAnimateEnd = false
+    curGameStatus = STATUS.IDLE
+    curVictoryCount = VICTORY_MAX_COUNT
     winnerList = []
   },
   reduceVictoryCount: () => {

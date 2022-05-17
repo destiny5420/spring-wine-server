@@ -32,15 +32,39 @@
     <div>
       <h3>題目</h3>
       <div>
-        <button class="js-topic-a">題目 A</button>
-        <button class="js-topic-b">題目 B</button>
-        <button class="js-topic-c">題目 C</button>
+        <button class="js-topic-0">題目 0</button>
+        <button class="js-topic-1">題目 1</button>
+        <button class="js-topic-2">題目 2</button>
+        <button class="js-topic-3">題目 3</button>
+        <button class="js-topic-4">題目 4</button>
+        <button class="js-topic-5">題目 5</button>
+        <button class="js-topic-6">題目 6</button>
+        <button class="js-topic-7">題目 7</button>
+        <button class="js-topic-8">題目 8</button>
+        <button class="js-topic-9">題目 9</button>
+        <button class="js-topic-10">題目 10</button>
+        <button class="js-topic-11">題目 11</button>
+        <button class="js-topic-12">題目 12</button>
+        <button class="js-topic-13">題目 13</button>
+        <button class="js-topic-14">題目 14</button>
+        <button class="js-topic-15">題目 15</button>
+        <button class="js-topic-16">題目 16</button>
+        <button class="js-topic-17">題目 17</button>
+        <button class="js-topic-18">題目 18</button>
+        <button class="js-topic-19">題目 19</button>
+        <button class="js-topic-20">題目 20</button>
+        <button class="js-topic-21">題目 21</button>
+        <button class="js-topic-22">題目 22</button>
+        <button class="js-topic-23">題目 23</button>
+        <button class="js-topic-24">題目 24</button>
+        <button class="js-topic-25">題目 25</button>
       </div>
     </div>
     <div>
       <h3>結果</h3>
       <div>
         <button class="js-topic-get-leaderboard">顯示排行榜</button>
+        <button class="js-status-reset">伺服器狀態 Reset</button>
       </div>
     </div>
   </body>
@@ -105,36 +129,26 @@
       })
     })
 
-    const btnA = $('.js-topic-a').click(function () {
-      socket.emit('CS_MESSAGE', {
-        type: 'CS_DashboardNewTopic',
-        data: {
-          index: 0,
-        },
+    for (let index = 0; index < 26; index++) {
+      const btn = $(`.js-topic-${index}`).click(function () {
+        socket.emit('CS_MESSAGE', {
+          type: 'CS_DashboardNewTopic',
+          data: {
+            index: index,
+          },
+        })
       })
-    })
-
-    const btnB = $('.js-topic-b').click(function () {
-      socket.emit('CS_MESSAGE', {
-        type: 'CS_DashboardNewTopic',
-        data: {
-          index: 1,
-        },
-      })
-    })
-
-    const btnC = $('.js-topic-c').click(function () {
-      socket.emit('CS_MESSAGE', {
-        type: 'CS_DashboardNewTopic',
-        data: {
-          index: 2,
-        },
-      })
-    })
+    }
 
     const btnGetLeaderBoard = $('.js-topic-get-leaderboard').click(function () {
       socket.emit('CS_MESSAGE', {
         type: 'CS_GetLeaderBoard',
+      })
+    })
+
+    const btnServerReset = $('.js-status-reset').click(function () {
+      socket.emit('CS_MESSAGE', {
+        type: 'CS_ServerReset',
       })
     })
 

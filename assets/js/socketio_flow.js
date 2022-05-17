@@ -76,6 +76,9 @@ function SocketFlow(io) {
               response.status(200).send(err)
             })
           break
+        case 'CS_ServerReset':
+          gameStatus.statusReset()
+          break
         default:
           break
       }
