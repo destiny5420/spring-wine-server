@@ -52,6 +52,8 @@ function SocketFlow(io) {
           })
           break
         case 'CS_AnimateClose':
+          gameStatus.setAnimateEnd(true)
+
           SC_MESSAGE({
             type: 'SC_AnimateClose',
           })
@@ -76,7 +78,7 @@ function SocketFlow(io) {
       }
     })
 
-    socket.emit('connected', { gameStatus: gameStatus.getStatus() })
+    socket.emit('connected', { isAnimateEnd: gameStatus.isAnimateEnd() })
   })
 }
 

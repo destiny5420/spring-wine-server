@@ -6,6 +6,7 @@ const STATUS = {
 
 const UNIT_SCORE = 500
 const VICTORY_MAX_COUNT = 2
+let curAnimateEnd = false
 let curGameStatus = STATUS.IDLE
 let curVictoryCount = VICTORY_MAX_COUNT
 let winnerList = []
@@ -39,6 +40,12 @@ module.exports = {
   },
   getStatus: () => {
     return curGameStatus
+  },
+  setAnimateEnd: (key) => {
+    curAnimateEnd = key
+  },
+  isAnimateEnd: () => {
+    return curAnimateEnd
   },
   getStatusList: STATUS,
 }
