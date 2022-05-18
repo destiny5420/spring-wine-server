@@ -18,6 +18,7 @@
   </head>
   <body>
     <div>
+      <h1>目前題目編號<span class="js-topic-num"></span></h1>
       <h3>分鏡</h3>
       <div>
         <button class="js-anime-01">分鏡 01</button>
@@ -58,6 +59,38 @@
         <button class="js-topic-23">題目 23</button>
         <button class="js-topic-24">題目 24</button>
         <button class="js-topic-25">題目 25</button>
+      </div>
+      <div>
+        <button class="js-topic-26">題目 26</button>
+        <button class="js-topic-27">題目 27</button>
+        <button class="js-topic-28">題目 28</button>
+        <button class="js-topic-29">題目 29</button>
+        <button class="js-topic-30">題目 30</button>
+        <button class="js-topic-31">題目 31</button>
+        <button class="js-topic-32">題目 32</button>
+        <button class="js-topic-33">題目 33</button>
+        <button class="js-topic-34">題目 34</button>
+        <button class="js-topic-35">題目 35</button>
+        <button class="js-topic-36">題目 36</button>
+        <button class="js-topic-37">題目 37</button>
+        <button class="js-topic-38">題目 38</button>
+        <button class="js-topic-39">題目 39</button>
+        <button class="js-topic-40">題目 40</button>
+        <button class="js-topic-41">題目 41</button>
+        <button class="js-topic-42">題目 42</button>
+        <button class="js-topic-43">題目 43</button>
+        <button class="js-topic-44">題目 44</button>
+        <button class="js-topic-45">題目 45</button>
+        <button class="js-topic-46">題目 46</button>
+        <button class="js-topic-47">題目 47</button>
+        <button class="js-topic-48">題目 48</button>
+        <button class="js-topic-49">題目 49</button>
+        <button class="js-topic-50">題目 50</button>
+        <button class="js-topic-51">題目 51</button>
+        <button class="js-topic-52">題目 52</button>
+        <button class="js-topic-53">題目 53</button>
+        <button class="js-topic-54">題目 54</button>
+        <button class="js-topic-55">題目 55</button>
       </div>
     </div>
     <div>
@@ -129,8 +162,10 @@
       })
     })
 
-    for (let index = 0; index < 26; index++) {
+    for (let index = 0; index < 56; index++) {
       const btn = $(`.js-topic-${index}`).click(function () {
+        console.log(index)
+        $('.js-topic-num').text(index)
         socket.emit('CS_MESSAGE', {
           type: 'CS_DashboardNewTopic',
           data: {
