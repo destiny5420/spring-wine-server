@@ -100,6 +100,7 @@ router.post('/click', function (request, response) {
 
     response.status(200).send({
       result: `測試使用`,
+      success: true,
       valid: true,
       answerCorrect: true,
     })

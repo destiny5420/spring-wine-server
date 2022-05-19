@@ -161,6 +161,7 @@ async function addScore(data) {
     return {
       email: data.email,
       score: resultScore,
+      success: true,
     }
   } catch (err) {
     return {
