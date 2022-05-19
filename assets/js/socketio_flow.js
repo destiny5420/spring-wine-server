@@ -86,7 +86,10 @@ function SocketFlow(io) {
       }
     })
 
-    socket.emit('connected', { isAnimateEnd: gameStatus.isAnimateEnd() })
+    socket.emit('connected', {
+      isAnimateEnd: gameStatus.isAnimateEnd(),
+      localStorageIndex: gameStatus.getLocalStorageIndex,
+    })
   })
 }
 

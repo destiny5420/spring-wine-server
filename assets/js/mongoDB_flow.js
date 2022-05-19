@@ -1,5 +1,6 @@
 const mongoose = require('mongoose')
 const roomStatue = require('../../store/room')
+const gameStatus = require('../../store/gameStatus')
 const LeaderBoard = require('./models/leaderboard')
 const url = `mongodb+srv://player:${process.env.MONGODB_PASSWORD}@leaderboard.zpdh3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
 
@@ -67,7 +68,7 @@ async function register(data) {
   const findObj = await LeaderBoard.find({
     email: data.email,
   })
-  console.log(`register / findObj: `, findObj)
+  // console.log(`register / findObj: `, findObj)
 
   if (findObj.name !== data.name) {
     await LeaderBoard.findOneAndUpdate(
@@ -87,6 +88,7 @@ async function register(data) {
       result: 'The user already exits',
       name: data.name,
       email: data.email,
+      localStorageIndex: gameStatus.getLocalStorageIndex,
     }
   }
 
@@ -102,6 +104,7 @@ async function register(data) {
     result: 'register successfully!',
     name: data.name,
     email: data.email,
+    localStorageIndex: gameStatus.getLocalStorageIndex,
   }
 }
 

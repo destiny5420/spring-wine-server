@@ -6,6 +6,7 @@ const STATUS = {
 
 const UNIT_SCORE = 500
 const VICTORY_MAX_COUNT = 3
+const LOCAL_STORAGE_INDEX = 1
 let curAnimateEnd = false
 let curGameStatus = STATUS.IDLE
 let curVictoryCount = VICTORY_MAX_COUNT
@@ -57,4 +58,5 @@ module.exports = {
     return curAnimateEnd
   },
   getStatusList: STATUS,
+  getLocalStorageIndex: LOCAL_STORAGE_INDEX,
 }
