@@ -31,6 +31,7 @@ router.post('/click', function (request, response) {
   if (!gameStatus.isPlaying()) {
     response.status(200).send({
       result: '遊戲尚未開始',
+      success: false,
       valid: false,
     })
     return
@@ -43,6 +44,7 @@ router.post('/click', function (request, response) {
   if (color !== topic.getCurTopic()) {
     response.status(200).send({
       result: `不是這個東西喔！`,
+      success: true,
       valid: true,
       answerCorrect: false,
     })
@@ -57,6 +59,7 @@ router.post('/click', function (request, response) {
   if (gameStatus.hasWinner(email)) {
     response.status(200).send({
       result: '此 Round 你已經是贏家了！',
+      success: false,
       valid: false,
     })
     return
