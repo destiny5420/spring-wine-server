@@ -7,7 +7,7 @@ let curIO = null
 
 function SetNewTopic(data) {
   topic.setCurTopic(data.data.index)
-  gameStatus.init()
+  gameStatus.init(data.data.index)
 }
 
 function SC_MESSAGE(data) {

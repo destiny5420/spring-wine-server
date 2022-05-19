@@ -11,6 +11,10 @@ function SC_MESSAGE(data) {
   curIO.emit('SC_MESSAGE', data)
 }
 
+const clamp = (value, min, max) => {
+  return Math.min(Math.max(value, min), max)
+}
+
 router.post('/click', function (request, response) {
   const name = request.body.name
   const email = request.body.email
@@ -64,8 +68,15 @@ router.post('/click', function (request, response) {
   // 1.增加 mail 至白名單
   gameStatus.addWinner(email)
 
+  // 2. 計算額外分數
+  const START_TIMER = gameStatus.getTopicTimer()
+  const END_TIMER = Date.now()
+  const MAX_SCORE = 30
+  const RESULT_TIMER = MAX_SCORE - parseInt((END_TIMER - START_TIMER) / 1000)
+  const EXTRA_SCORE = clamp(RESULT_TIMER, 0, MAX_SCORE)
+
   // 2. 獲取分數，不能在 reduceVictoryCount() 之後
-  const score = gameStatus.getScore()
+  const score = gameStatus.getScore() + EXTRA_SCORE
   gameStatus.reduceVictoryCount()
 
   const isGameOver = gameStatus.isGameOver()
@@ -77,28 +88,45 @@ router.post('/click', function (request, response) {
     })
   }
 
-  mongoDBFlow
-    .addScore({ email, score })
-    .then((result) => {
-      loggerFlow.write(`[API-Click] / email: ${email} / add-score: ${score}`)
+  if (gameStatus.isExample()) {
+    SC_MESSAGE({
+      type: 'SC_GAME_VICTORY',
+      data: {
+        name: name,
+        mail: email,
+        gameStatus: gameStatus.getStatus(),
+      },
+    })
 
-      SC_MESSAGE({
-        type: 'SC_GAME_VICTORY',
-        data: {
-          name: name,
-          mail: email,
-          gameStatus: gameStatus.getStatus(),
-        },
-      })
-      response.status(200).send({
-        ...result,
-        valid: true,
-        answerCorrect: true,
-      })
+    response.status(200).send({
+      result: `測試使用`,
+      valid: true,
+      answerCorrect: true,
     })
-    .catch((err) => {
-      response.status(200).send(err)
-    })
+  } else {
+    mongoDBFlow
+      .addScore({ email, score })
+      .then((result) => {
+        loggerFlow.write(`[API-Click] / email: ${email} / add-score: ${score}`)
+
+        SC_MESSAGE({
+          type: 'SC_GAME_VICTORY',
+          data: {
+            name: name,
+            mail: email,
+            gameStatus: gameStatus.getStatus(),
+          },
+        })
+        response.status(200).send({
+          ...result,
+          valid: true,
+          answerCorrect: true,
+        })
+      })
+      .catch((err) => {
+        response.status(200).send(err)
+      })
+  }
 })
 
 router.get('/get-game-status', function (req, res) {

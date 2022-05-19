@@ -164,7 +164,6 @@
 
     for (let index = 0; index < 56; index++) {
       const btn = $(`.js-topic-${index}`).click(function () {
-        console.log(index)
         $('.js-topic-num').text(index)
         socket.emit('CS_MESSAGE', {
           type: 'CS_DashboardNewTopic',
