@@ -1,4 +1,5 @@
 const mongoose = require('mongoose')
+const roomStatue = require('../../store/room')
 const LeaderBoard = require('./models/leaderboard')
 const url = `mongodb+srv://player:${process.env.MONGODB_PASSWORD}@leaderboard.zpdh3.mongodb.net/myFirstDatabase?retryWrites=true&w=majority`
 
@@ -93,7 +94,8 @@ async function register(data) {
     email: data.email,
     name: data.name,
   })
-  console.log(`createObj: `, createObj)
+
+  roomStatue.registerPlayer()
 
   return {
     success: true,

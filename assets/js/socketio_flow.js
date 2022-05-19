@@ -1,5 +1,6 @@
 const topic = require('../../store/topic')
 const gameStatus = require('../../store/gameStatus')
+const roomStatus = require('../../store/room')
 const mongoDBFlow = require('../../assets/js/mongoDB_flow')
 const loggerFlow = require('../../assets/js/logger_flow')
 let curIO = null
@@ -15,10 +16,11 @@ function SC_MESSAGE(data) {
 
 function SocketFlow(io) {
   io.on('connection', (socket) => {
-    console.log('a user connected')
+    roomStatus.increasePlayer()
 
     socket.on('disconnect', () => {
       console.log('user disconnected')
+      roomStatus.decreasePlayer()
     })
 
     socket.on('CS_MESSAGE', (data) => {
