@@ -6,7 +6,6 @@ const Global = require('./store/global')
 const auth = require('./middleware/auth')
 const login = require('./middleware/login')
 const cookieParser = require('cookie-parser')
-const morgan = require('morgan')
 const cors = require('cors')
 const corsOptions = {
   origin: process.env.CLIENT ? [process.env.CLIENT] : '*',
@@ -33,7 +32,6 @@ GameRouter.setIO(io)
 app.use(cors(corsOptions))
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
-app.use(morgan('dev'))
 app.use(cookieParser(process.env.SECRET_COOKIE))
 
 app.use('/game', GameRouter.router)
