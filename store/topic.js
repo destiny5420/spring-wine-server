@@ -1,6 +1,6 @@
 const topicMapTable = [
   '#0a4a00',
-  '#2efffc',
+  '#30fefc',
   '#3f5992',
   '#007a3f',
   '#7b9fd1',
