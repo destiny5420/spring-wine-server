@@ -6,13 +6,14 @@ const STATUS = {
 
 const UNIT_SCORE = 100
 const VICTORY_MAX_COUNT = 3
-const LOCAL_STORAGE_INDEX = 1
+const LOCAL_STORAGE_INDEX = 0
 let curAnimateEnd = false
 let curGameStatus = STATUS.IDLE
 let isExample = false
 let curVictoryCount = VICTORY_MAX_COUNT
 let winnerList = []
-let topicTimer = 0
+let topicTimer = -1
+let curTopicNum = 0
 
 module.exports = {
   init: (dataIndex) => {
@@ -28,7 +29,14 @@ module.exports = {
     curVictoryCount = VICTORY_MAX_COUNT
     winnerList = []
     isExample = false
+    curTopicNum = -1
     topicTimer = 0
+  },
+  addTopicNum() {
+    curTopicNum += 1
+  },
+  getTopicNum() {
+    return curTopicNum
   },
   reduceVictoryCount: () => {
     curVictoryCount -= 1

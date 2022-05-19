@@ -8,6 +8,7 @@ let curIO = null
 function SetNewTopic(data) {
   topic.setCurTopic(data.data.index)
   gameStatus.init(data.data.index)
+  gameStatus.addTopicNum()
 }
 
 function SC_MESSAGE(data) {
@@ -39,6 +40,7 @@ function SocketFlow(io) {
           SC_MESSAGE({
             type: 'SC_DashboardNewTopic',
             data: {
+              topicNum: gameStatus.getTopicNum(),
               index: data.data.index,
             },
           })
