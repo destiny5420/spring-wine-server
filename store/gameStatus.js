@@ -6,7 +6,7 @@ const STATUS = {
 
 const UNIT_SCORE = 100
 const VICTORY_MAX_COUNT = 3
-const LOCAL_STORAGE_INDEX = 0
+const LOCAL_STORAGE_INDEX = 1
 let curAnimateEnd = false
 let curGameStatus = STATUS.IDLE
 let isExample = false
