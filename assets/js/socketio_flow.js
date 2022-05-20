@@ -34,7 +34,7 @@ function SocketFlow(io) {
           loggerFlow.write(
             `[CS_DashboardNewTopic] / index: ${
               data.data.index
-            } / color: ${topic.getCurTopic()}`
+            } / color: ${topic.getCurTopic()} / topic number: ${gameStatus.getTopicTimer()}`
           )
 
           SC_MESSAGE({

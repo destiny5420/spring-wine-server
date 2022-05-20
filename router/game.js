@@ -29,6 +29,10 @@ router.post('/click', function (request, response) {
    * 1. 有可能時間差，同時送出兩個 Click API，但第一個 API 剛好結束，第二個 API 需要送 Valid = false 回去
    */
   if (!gameStatus.isPlaying()) {
+    loggerFlow.write(
+      `[API-Click] / email: ${email} / game is playing: ${gameStatus.isPlaying()} / The game hasn't started yet!`
+    )
+
     response.status(200).send({
       result: '遊戲尚未開始',
       success: false,
@@ -57,6 +61,12 @@ router.post('/click', function (request, response) {
    * 2. 可能多送 API 兩次
    */
   if (gameStatus.hasWinner(email)) {
+    loggerFlow.write(
+      `[API-Click] / winner list: ${gameStatus.getWinner()} / player email: ${email} / player include winner list ? ${gameStatus.hasWinner(
+        email
+      )}`
+    )
+
     response.status(200).send({
       result: '此 Round 你已經是贏家了！',
       success: false,
@@ -78,7 +88,7 @@ router.post('/click', function (request, response) {
   const RESULT_TIMER = MAX_SCORE - parseInt((END_TIMER - START_TIMER) / 1000)
   const EXTRA_SCORE = clamp(RESULT_TIMER, 0, MAX_SCORE)
 
-  // 2. 獲取分數，不能在 reduceVictoryCount() 之後
+  // 3. 獲取分數，不能在 reduceVictoryCount() 之後
   const score = gameStatus.getScore() + EXTRA_SCORE
   gameStatus.reduceVictoryCount()
 
@@ -111,7 +121,9 @@ router.post('/click', function (request, response) {
     mongoDBFlow
       .addScore({ email, score })
       .then((result) => {
-        loggerFlow.write(`[API-Click] / email: ${email} / add-score: ${score}`)
+        loggerFlow.write(
+          `[API-Click] / email: ${email} / add-score: ${score} / final-score: ${result.score}`
+        )
 
         SC_MESSAGE({
           type: 'SC_GAME_VICTORY',

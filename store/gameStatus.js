@@ -47,6 +47,9 @@ module.exports = {
   hasWinner: (mail) => {
     return winnerList.includes(mail)
   },
+  getWinner: () => {
+    return winnerList
+  },
   isGameOver: () => {
     return curVictoryCount <= 0
   },
